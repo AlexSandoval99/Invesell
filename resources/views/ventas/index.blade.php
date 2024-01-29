@@ -43,6 +43,8 @@
                                     <div class="btn-group">
                                         <a type="button" class="btn btn-success"
                                             href="{{ route('ventas.show', $v->id) }}">Ver</a>
+                                        <a type="button" class="btn btn-success"
+                                            href="{{ route('ticket.pdf', $v->id) }}">Ver</a>
                                     </div>
                                 </td>
                             </tr>

@@ -84,6 +84,8 @@ Route::get('Ventas/Agregar', [VentasController::class, 'create'])->name('ventas.
 Route::get('Ventas/{id}', [VentasController::class, 'show'])->name('ventas.show');
 Route::post('Ventas/Agregar', [VentasController::class, 'addArticulo'])->name('ventas.addarticulo');
 Route::post('Ventas/Finalizar', [VentasController::class, 'store'])->name('ventas.store');
+Route::post('Ventas/print', [VentasController::class, 'print'])->name('ticket.print');
+Route::get('Ventas/print_pdf/{id}', [VentasController::class, 'print_pdf'])->name('ticket.pdf');
 
 //ventas
 Route::get('AjustesDeInventario', [AjustesDeInventarioController::class, 'index'])->name('ajustesdeinventario.index');

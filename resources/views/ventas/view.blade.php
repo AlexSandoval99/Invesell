@@ -42,7 +42,7 @@
         </div>
 
         <!-- /.card-body -->
-        
+
         <!-- /.card-footer-->
     </div>
     <br>
@@ -85,57 +85,79 @@
             </table>
             <br />
         </div>
+        <button type="button" class="btn btn-primary" id="imprimirTicket">Imprimir Ticket</button> <!-- Agrega este botón -->
+
     @stop
 
     @section('js')
         <script>
             $(document).ready(function() {
-                $("#example").DataTable({
-                    order: [
-                        [0, "desc"]
-                    ],
-                    columnDefs: [{
-                        targets: [2],
-                        visible: true,
-                        searchable: true,
-                    }, ],
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excelHtml5',
-                        'csvHtml5',
+                // $("#example").DataTable({
+                //     order: [
+                //         [0, "desc"]
+                //     ],
+                //     columnDefs: [{
+                //         targets: [2],
+                //         visible: true,
+                //         searchable: true,
+                //     }, ],
+                //     dom: 'Bfrtip',
+                //     buttons: [
+                //         'excelHtml5',
+                //         'csvHtml5',
 
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            autoPrint: true,
+                //         {
+                //             extend: 'print',
+                //             text: 'Imprimir',
+                //             autoPrint: true,
 
-                            customize: function(win) {
-                                $(win.document.body).css('font-size', '16pt');
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
+                //             customize: function(win) {
+                //                 $(win.document.body).css('font-size', '16pt');
+                //                 $(win.document.body).find('table')
+                //                     .addClass('compact')
+                //                     .css('font-size', 'inherit');
 
-                            }
+                //             }
+                //         },
+                //         {
+                //             extend: 'pdfHtml5',
+                //             text: 'PDF',
+                //             filename: 'Venta.pdf',
+
+                //             title: 'Venta {{ $venta->id }}',
+                //             pageSize: 'LETTER',
+
+
+                //         }
+
+
+
+
+
+                //     ],
+                //     language: {
+                //         url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+                //     },
+                // });
+                $("#imprimirTicket").click(function() {
+                    // Obtener los datos que deseas enviar a ticket.php
+                    var datos = @json($venta);
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    // Enviar los datos a ticket.php utilizando una solicitud POST
+                    $.ajax({
+                        url: '{{ route('ticket.print') }}',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
                         },
-                        {
-                            extend: 'pdfHtml5',
-                            text: 'PDF',
-                            filename: 'Venta.pdf',
-
-                            title: 'Venta {{ $venta->id }}',
-                            pageSize: 'LETTER',
-
-
+                        data: datos,
+                        success: function(response) {
+                            // Manejar la respuesta de ticket.php si es necesario
+                        },
+                        error: function(xhr, status, error) {
+                            // Manejar errores si es necesario
                         }
-
-
-
-
-
-                    ],
-                    language: {
-                        url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
-                    },
+                    });
                 });
             });
         </script>

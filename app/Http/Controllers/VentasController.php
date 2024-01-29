@@ -220,8 +220,14 @@ class VentasController extends Controller
      * @param  \App\Models\Ventas  $ventas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ventas $ventas)
+    public function print(Ventas $ventas)
     {
-        //
+        $ventas = Ventas::find(request()->id);
+        return view('ventas.ticket', compact(['ventas']));
+    }
+    public function print_pdf(Ventas $ventas)
+    {
+        $ventas = Ventas::find(request()->id);
+        return view('ventas.ticket_pdf', compact(['ventas']));
     }
 }

@@ -10,7 +10,6 @@ class DetalleVentas extends Model
     use HasFactory;
     public function Producto()
     {
-
         return $this->hasOne(Articulo::class, 'id', 'producto_id');
     }
 }
